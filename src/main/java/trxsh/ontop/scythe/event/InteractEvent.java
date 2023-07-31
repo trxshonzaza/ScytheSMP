@@ -19,7 +19,10 @@ public class InteractEvent implements Listener {
         if(e.getItem() == null)
             return;
 
-        if(e.getAction() != Action.RIGHT_CLICK_AIR || e.getAction() != Action.RIGHT_CLICK_BLOCK)
+        if(e.getAction() != Action.RIGHT_CLICK_AIR)
+            return;
+
+        if(e.getAction() != Action.RIGHT_CLICK_BLOCK)
             return;
 
         ItemStack item = e.getItem();

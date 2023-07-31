@@ -21,9 +21,9 @@ public final class Main extends JavaPlugin {
 
         Bukkit.getPluginCommand("tester").setExecutor(new TestCommand());
 
-        AbilityLoop.start();
-
         Instance = this;
+
+        AbilityLoop.start();
 
     }
 

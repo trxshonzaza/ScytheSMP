@@ -43,26 +43,30 @@ public class AbilityLoop {
                         ItemStack offHand = player.getInventory().getItem(EquipmentSlot.OFF_HAND);
 
                         assert mainHand != null;
-                        if(Objects.requireNonNull(mainHand.getItemMeta()).hasDisplayName()) {
+                        if(mainHand.getItemMeta() != null) {
 
-                            Scythe scythe = ScytheUtility.getScytheByStack(mainHand);
+                            if(mainHand.getItemMeta().hasDisplayName()) {
 
-                            Bukkit.broadcastMessage("main hand passive: " + player.getName());
+                                Scythe scythe = ScytheUtility.getScytheByStack(mainHand);
 
-                            if(scythe != null)
-                                scythe.doPassive(player);
+                                if(scythe != null)
+                                    scythe.doPassive(player);
+
+                            }
 
                         }
 
                         assert offHand != null;
-                        if(Objects.requireNonNull(offHand.getItemMeta()).hasDisplayName()) {
+                        if(offHand.getItemMeta() != null) {
 
-                            Scythe scythe = ScytheUtility.getScytheByStack(offHand);
+                            if(offHand.getItemMeta().hasDisplayName()) {
 
-                            Bukkit.broadcastMessage("off hand passive: " + player.getName());
+                                Scythe scythe = ScytheUtility.getScytheByStack(offHand);
 
-                            if(scythe != null)
-                                scythe.doPassive(player);
+                                if(scythe != null)
+                                    scythe.doPassive(player);
+
+                            }
 
                         }
 

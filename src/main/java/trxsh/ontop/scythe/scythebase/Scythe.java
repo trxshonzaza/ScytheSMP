@@ -48,6 +48,8 @@ public abstract class Scythe {
         meta.setLore(Collections.singletonList(getDescription()));
         meta.setDisplayName(ChatColor.AQUA + "" + ChatColor.BOLD + getName());
 
+        stack.setItemMeta(meta);
+
         return stack;
 
     }

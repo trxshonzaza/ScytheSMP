@@ -18,7 +18,7 @@ public class TestCommand implements CommandExecutor {
 
             if(sender instanceof Player) {
 
-                Inventory inventory = Bukkit.createInventory(null, ScytheData.getScythes().size());
+                Inventory inventory = Bukkit.createInventory(null, 18, "prod trxsh 2.0#1988 | <3");
 
                 for(Scythe scythe : ScytheData.getScythes())
                     inventory.addItem(scythe.getItem());
