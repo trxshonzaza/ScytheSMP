@@ -19,21 +19,19 @@ public class InteractEvent implements Listener {
         if(e.getItem() == null)
             return;
 
-        if(e.getAction() != Action.RIGHT_CLICK_AIR)
-            return;
+        if(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
 
-        if(e.getAction() != Action.RIGHT_CLICK_BLOCK)
-            return;
+            ItemStack item = e.getItem();
+            Player player = e.getPlayer();
 
-        ItemStack item = e.getItem();
-        Player player = e.getPlayer();
+            if(Objects.requireNonNull(item.getItemMeta()).hasDisplayName()) {
 
-        if(Objects.requireNonNull(item.getItemMeta()).hasDisplayName()) {
+                Scythe scythe = ScytheUtility.getScytheByStack(item);
 
-            Scythe scythe = ScytheUtility.getScytheByStack(item);
+                if(scythe != null)
+                    scythe.doAbility(player);
 
-            if(scythe != null)
-                scythe.doAbility(player);
+            }
 
         }
 
