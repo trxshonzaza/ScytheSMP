@@ -32,4 +32,41 @@ public class DataPlayer {
 
     }
 
+    public void setData(Player player) {
+
+        if(player.isOnline()) {
+
+            isOnline = true;
+            this.player = player;
+
+        }
+
+        this.playerId = player.getUniqueId();
+        this.name = player.getName();
+
+    }
+
+    public String getName() {
+
+        return name;
+
+    }
+
+    public boolean isOnline() {
+
+        return isOnline;
+
+    }
+
+    public UUID getPlayerId() {
+
+        return playerId;
+
+    }
+
+    public Player getPlayer() {
+
+        return player;
+
+    }
 }

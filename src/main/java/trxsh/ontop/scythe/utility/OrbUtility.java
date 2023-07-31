@@ -10,9 +10,12 @@ public class OrbUtility {
 
         if(OrbData.contains(id)) {
 
-            int level = OrbData.orbLevels.get(id);
+            int level = (OrbData.orbLevels.get(id) - 1);
 
-            OrbData.replace(id, level - 1);
+            if(level < -5)
+                level = -5;
+
+            OrbData.replace(id, level);
 
         }
 
@@ -22,9 +25,12 @@ public class OrbUtility {
 
         if(OrbData.contains(id)) {
 
-            int level = OrbData.orbLevels.get(id);
+            int level = (OrbData.orbLevels.get(id) + 1);
 
-            OrbData.replace(id, level + 1);
+            if(level > 5)
+                level = 5;
+
+            OrbData.replace(id, level);
 
         }
 

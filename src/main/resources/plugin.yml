@@ -4,3 +4,7 @@ main: trxsh.ontop.scythe.Main
 api-version: 1.20
 authors: [ trxsh ]
 description: scythe smp plugin
+commands:
+  tester:
+    description: tester command
+    usage: /<command>
