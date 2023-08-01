@@ -13,6 +13,12 @@ public class OrbData {
 
     }
 
+    public static void add(UUID id, int level) {
+
+        orbLevels.put(id, level);
+
+    }
+
     public static void remove(UUID id) {
 
         orbLevels.remove(id);

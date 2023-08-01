@@ -16,6 +16,8 @@ public class DataPlayer {
 
     public Player player;
 
+    public int hits = 0;
+
     public DataPlayer(UUID id) {
 
         OfflinePlayer player = Bukkit.getOfflinePlayer(id);
@@ -69,4 +71,29 @@ public class DataPlayer {
         return player;
 
     }
+
+    public void addHit() {
+
+        hits++;
+
+    }
+
+    public void subtractHit() {
+
+        hits--;
+
+    }
+
+    public void resetHits() {
+
+        hits = 0;
+
+    }
+
+    public int getHits() {
+
+        return hits;
+
+    }
+
 }
