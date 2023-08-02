@@ -45,6 +45,7 @@ public abstract class Scythe {
 
         assert meta != null;
         meta.addEnchant(Enchantment.DAMAGE_ALL, 6, true);
+        meta.setUnbreakable(true);
         meta.setLore(Collections.singletonList(getDescription()));
         meta.setDisplayName(ChatColor.AQUA + "" + ChatColor.BOLD + getName());
 

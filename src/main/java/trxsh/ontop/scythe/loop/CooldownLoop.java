@@ -10,6 +10,7 @@ import trxsh.ontop.scythe.Main;
 import trxsh.ontop.scythe.data.CooldownData;
 import trxsh.ontop.scythe.data.PlayerData;
 import trxsh.ontop.scythe.data.player.DataPlayer;
+import trxsh.ontop.scythe.utility.PlayerUtility;
 
 import java.util.UUID;
 
@@ -39,10 +40,11 @@ public class CooldownLoop {
 
                             Player player = p.getPlayer();
 
-                            if(CooldownData.contains(player.getUniqueId()))
-                                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("⚡" + " | " + ChatColor.RED + "On Cooldown"));
-                            else
-                                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("⚡" + " | " + ChatColor.GREEN + "Ready"));
+                            if(PlayerUtility.hasScytheInHand(p))
+                                if(CooldownData.hasCooldown(player.getUniqueId()))
+                                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("⚡" + " | " + ChatColor.RED + "On Cooldown (" + CooldownData.getRemainingDuration(player.getUniqueId()) / 1000 + "s)"));
+                                else
+                                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("⚡" + " | " + ChatColor.GREEN + "Ready"));
 
                         }
 
@@ -51,30 +53,6 @@ public class CooldownLoop {
             }
 
         }, 30L, 30L);
-
-    }
-
-    /*
-    NOTE: THE DELAY FOR THE COOLDOWN IS IN TICKS!!!!!
-    DOING THIS METHOD WRONG WILL RESULT IN PLUGIN ISSUES!!
-    CALCULATION: (seconds) * 20
-     */
-
-    public static void runCooldown(UUID playerId, long ticks) {
-
-        CooldownData.add(playerId);
-
-        Bukkit.getScheduler().runTaskLater(Main.Instance, new Runnable() {
-
-            @Override
-            public void run() {
-
-                if(CooldownData.contains(playerId))
-                    CooldownData.remove(playerId);
-
-            }
-
-        }, ticks);
 
     }
 

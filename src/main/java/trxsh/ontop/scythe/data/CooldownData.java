@@ -1,28 +1,49 @@
 package trxsh.ontop.scythe.data;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.UUID;
 
 public class CooldownData {
 
-    public static List<UUID> cooldowns = new ArrayList<>();
+    /*
+    THE COOLDOWN DURATION IS IN MILLISECONDS!!!!
+    CALCULATION: (seconds) * 1000
+     */
 
-    public static void add(UUID id) {
+    public static HashMap<UUID, Long> cooldowns = new HashMap<>();
+    private static HashMap<UUID, Long> cooldownDurations = new HashMap<>();
 
-        cooldowns.add(id);
+    public static void add(UUID id, long duration) {
+
+        cooldowns.put(id, System.currentTimeMillis() + duration);
+        cooldownDurations.put(id, duration);
 
     }
 
-    public static void remove(UUID id) {
+    public static boolean hasCooldown(UUID id) {
 
-        cooldowns.remove(id);
+        return cooldowns.containsKey(id) && System.currentTimeMillis() - cooldowns.get(id) < getCooldownDuration(id);
 
     }
 
-    public static boolean contains(UUID id) {
+    public static long getRemainingDuration(UUID id) {
 
-        return cooldowns.contains(id);
+        if (hasCooldown(id)) {
+
+            long elapsedTime = System.currentTimeMillis() - cooldowns.get(id);
+
+            return Math.max(cooldownDurations.get(id) - elapsedTime, 0);
+
+        }
+
+        return 0;
+
+    }
+
+    public static long getCooldownDuration(UUID id) {
+
+        return cooldownDurations.getOrDefault(id, 0L);
 
     }
 

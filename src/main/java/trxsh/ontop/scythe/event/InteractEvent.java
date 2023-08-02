@@ -1,5 +1,6 @@
 package trxsh.ontop.scythe.event;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -30,10 +31,13 @@ public class InteractEvent implements Listener {
 
                 Scythe scythe = ScytheUtility.getScytheByStack(item);
 
-                if(scythe != null && !CooldownData.contains(player.getUniqueId()) && player.isSneaking())
+                if(scythe != null && !CooldownData.hasCooldown(player.getUniqueId()) && player.isSneaking()) {
+
                     scythe.doAbility(player);
 
-                CooldownLoop.runCooldown(player.getUniqueId(), 4000L);
+                    CooldownData.add(player.getUniqueId(), 30000L);
+
+                }
 
             }
 

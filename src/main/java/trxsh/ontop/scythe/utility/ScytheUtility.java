@@ -45,7 +45,7 @@ public class ScytheUtility {
 
         Location playerLocation = p.getLocation();
 
-        Particle particleType = Particle.SPELL_MOB;
+        Particle particleType = Particle.REDSTONE;
 
         int circlePoints = 12;
 
@@ -57,7 +57,7 @@ public class ScytheUtility {
             double zOffset = Math.sin(angle) * 1.5;
 
             p.getWorld().spawnParticle(particleType, playerLocation.getX() + xOffset,
-                    playerLocation.getY(), playerLocation.getZ() + zOffset, 0, Color.RED);
+                    playerLocation.getY(), playerLocation.getZ() + zOffset, 0, 0, 0, 0, 0, new Particle.DustOptions(Color.RED, 1));
 
         }
 
