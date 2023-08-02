@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import trxsh.ontop.scythe.scythebase.Scythe;
 import trxsh.ontop.scythe.scythebase.ScytheType;
+import trxsh.ontop.scythe.utility.ScytheUtility;
 
 public class TestScythe extends Scythe {
 
@@ -20,6 +21,8 @@ public class TestScythe extends Scythe {
 
     @Override
     public void doPassive(Player player) {
+
+        ScytheUtility.spawnCustomParticles(player);
 
         Bukkit.broadcastMessage("test passive");
 

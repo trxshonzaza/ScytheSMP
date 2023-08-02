@@ -10,8 +10,6 @@ import trxsh.ontop.scythe.data.player.DataPlayer;
 import trxsh.ontop.scythe.scythebase.Scythe;
 import trxsh.ontop.scythe.utility.ScytheUtility;
 
-import java.util.Objects;
-
 public class AbilityLoop {
 
     public static boolean running = false;
@@ -30,49 +28,50 @@ public class AbilityLoop {
             @Override
             public void run() {
 
-                for(DataPlayer dp : PlayerData.playerList.values()) {
+                if (running)
+                    for (DataPlayer dp : PlayerData.playerList.values()) {
 
-                    if(dp.isOnline) {
+                        if (dp.isOnline() && dp.getPlayer() != null && dp.getPlayerId() != null) {
 
-                        Player player = dp.getPlayer();
+                            Player player = dp.getPlayer();
 
-                        if(player == null)
-                            return;
+                            if (player == null)
+                                return;
 
-                        ItemStack mainHand = player.getInventory().getItem(EquipmentSlot.HAND);
-                        ItemStack offHand = player.getInventory().getItem(EquipmentSlot.OFF_HAND);
+                            ItemStack mainHand = player.getInventory().getItem(EquipmentSlot.HAND);
+                            ItemStack offHand = player.getInventory().getItem(EquipmentSlot.OFF_HAND);
 
-                        assert mainHand != null;
-                        if(mainHand.getItemMeta() != null) {
+                            assert mainHand != null;
+                            if (mainHand.getItemMeta() != null) {
 
-                            if(mainHand.getItemMeta().hasDisplayName()) {
+                                if (mainHand.getItemMeta().hasDisplayName()) {
 
-                                Scythe scythe = ScytheUtility.getScytheByStack(mainHand);
+                                    Scythe scythe = ScytheUtility.getScytheByStack(mainHand);
 
-                                if(scythe != null)
-                                    scythe.doPassive(player);
+                                    if (scythe != null)
+                                        scythe.doPassive(player);
+
+                                }
 
                             }
 
-                        }
+                            assert offHand != null;
+                            if (offHand.getItemMeta() != null) {
 
-                        assert offHand != null;
-                        if(offHand.getItemMeta() != null) {
+                                if (offHand.getItemMeta().hasDisplayName()) {
 
-                            if(offHand.getItemMeta().hasDisplayName()) {
+                                    Scythe scythe = ScytheUtility.getScytheByStack(offHand);
 
-                                Scythe scythe = ScytheUtility.getScytheByStack(offHand);
+                                    if (scythe != null)
+                                        scythe.doPassive(player);
 
-                                if(scythe != null)
-                                    scythe.doPassive(player);
+                                }
 
                             }
 
                         }
 
                     }
-
-                }
 
             }
 

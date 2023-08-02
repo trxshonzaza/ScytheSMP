@@ -8,3 +8,6 @@ commands:
   tester:
     description: tester command
     usage: /<command>
+  orblevel:
+    description: shows a player their orb level.
+    usage: /<command>

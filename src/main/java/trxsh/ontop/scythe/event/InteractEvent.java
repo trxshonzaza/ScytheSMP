@@ -6,6 +6,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import trxsh.ontop.scythe.data.CooldownData;
+import trxsh.ontop.scythe.loop.CooldownLoop;
 import trxsh.ontop.scythe.scythebase.Scythe;
 import trxsh.ontop.scythe.utility.ScytheUtility;
 
@@ -28,8 +30,10 @@ public class InteractEvent implements Listener {
 
                 Scythe scythe = ScytheUtility.getScytheByStack(item);
 
-                if(scythe != null)
+                if(scythe != null && !CooldownData.contains(player.getUniqueId()) && player.isSneaking())
                     scythe.doAbility(player);
+
+                CooldownLoop.runCooldown(player.getUniqueId(), 4000L);
 
             }
 
