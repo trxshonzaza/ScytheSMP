@@ -8,6 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Collections;
+import java.util.HashMap;
 
 public abstract class Scythe {
 
@@ -15,13 +16,15 @@ public abstract class Scythe {
     public String name;
     public String description;
     public ScytheType type;
+    public HashMap<Enchantment, Integer> enchantments;
 
-    public Scythe(String name, String key, String description, ScytheType type) {
+    public Scythe(String name, String key, String description, ScytheType type, HashMap<Enchantment, Integer> enchantments) {
 
         this.key = key;
         this.name = name;
         this.description = description;
         this.type = type;
+        this.enchantments = enchantments;
 
     }
 
@@ -39,7 +42,7 @@ public abstract class Scythe {
 
     public ItemStack getItem() {
 
-        ItemStack stack = new ItemStack(Material.NETHERITE_AXE);
+        ItemStack stack = new ItemStack(Material.NETHERITE_SWORD);
 
         ItemMeta meta = stack.getItemMeta();
 
@@ -48,6 +51,10 @@ public abstract class Scythe {
         meta.setUnbreakable(true);
         meta.setLore(Collections.singletonList(getDescription()));
         meta.setDisplayName(ChatColor.AQUA + "" + ChatColor.BOLD + getName());
+
+        if(enchantments != null)
+            for(Enchantment enchantment : enchantments.keySet())
+                meta.addEnchant(enchantment, enchantments.get(enchantment), true);
 
         stack.setItemMeta(meta);
 

@@ -18,6 +18,8 @@ public class DataPlayer {
 
     public int hits = 0;
 
+    public boolean can2X = false;
+
     public DataPlayer(UUID id) {
 
         OfflinePlayer player = Bukkit.getOfflinePlayer(id);

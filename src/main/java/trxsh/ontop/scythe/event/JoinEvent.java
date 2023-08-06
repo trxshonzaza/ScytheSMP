@@ -9,6 +9,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import trxsh.ontop.scythe.data.OrbData;
 import trxsh.ontop.scythe.data.PlayerData;
 import trxsh.ontop.scythe.data.player.DataPlayer;
+import trxsh.ontop.scythe.utility.FakePlayerUtility;
 import trxsh.ontop.scythe.utility.OrbUtility;
 
 public class JoinEvent implements Listener {
@@ -18,6 +19,9 @@ public class JoinEvent implements Listener {
 
         DataPlayer dp = null;
         Player p = e.getPlayer();
+
+        if(FakePlayerUtility.isFake(p))
+            return;
 
         if(!PlayerData.contains(p.getUniqueId())) {
 

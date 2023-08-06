@@ -3,7 +3,7 @@ version: '${project.version}'
 main: trxsh.ontop.scythe.Main
 api-version: 1.20
 authors: [ trxsh ]
-description: scythe smp plugin
+description: scythe smp plugin (requires citizens and sentinel)
 commands:
   tester:
     description: tester command

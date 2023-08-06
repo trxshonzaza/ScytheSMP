@@ -26,7 +26,7 @@ public class OrbLevelCommand implements CommandExecutor {
 
         } else {
 
-            sender.sendMessage("player data does not exist! please re-login to fix.");
+            sender.sendMessage(ChatColor.RED + "Player data does not exist! please re-login to fix.");
 
         }
 

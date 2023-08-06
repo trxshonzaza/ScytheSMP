@@ -1,15 +1,18 @@
 package trxsh.ontop.scythe.scythebase.wrapper;
 
 import org.bukkit.Bukkit;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import trxsh.ontop.scythe.scythebase.Scythe;
 import trxsh.ontop.scythe.scythebase.ScytheType;
 import trxsh.ontop.scythe.utility.ScytheUtility;
 
+import java.util.HashMap;
+
 public class TestScythe extends Scythe {
 
-    public TestScythe(String name, String key, String description, ScytheType type) {
-        super(name, key, description, type);
+    public TestScythe(String name, String key, String description, ScytheType type, HashMap<Enchantment, Integer> enchantments) {
+        super(name, key, description, type, enchantments);
     }
 
     @Override

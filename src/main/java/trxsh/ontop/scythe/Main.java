@@ -1,5 +1,6 @@
 package trxsh.ontop.scythe;
 
+import net.citizensnpcs.api.npc.NPC;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -17,6 +18,7 @@ import trxsh.ontop.scythe.file.wrapper.OrbFileManager;
 import trxsh.ontop.scythe.file.wrapper.PlayerFileManager;
 import trxsh.ontop.scythe.loop.AbilityLoop;
 import trxsh.ontop.scythe.loop.CooldownLoop;
+import trxsh.ontop.scythe.utility.FakePlayerUtility;
 import trxsh.ontop.scythe.utility.OrbUtility;
 
 import java.io.File;
@@ -59,20 +61,23 @@ public final class Main extends JavaPlugin {
                 "    my github\n" +
                 "    https://github.com/trxshonzaza\n" +
                 "\n" +
-                "    ████████╗██████╗ ██╗  ██╗███████╗██╗  ██╗      ███╗   ███╗ █████╗ ██████╗ ███████╗ ████████╗██╗  ██╗██╗███████╗\n" +
-                "    ╚══██╔══╝██╔══██╗╚██╗██╔╝██╔════╝██║  ██║      ████╗ ████║██╔══██╗██╔══██╗██╔════╝ ╚══██╔══╝██║  ██║██║██╔════╝\n" +
+                "   ████████╗██████╗ ██╗  ██╗███████╗██╗  ██╗      ███╗   ███╗ █████╗ ██████╗ ███████╗ ████████╗██╗  ██╗██╗███████╗\n" +
+                "   ╚══██╔══╝██╔══██╗╚██╗██╔╝██╔════╝██║  ██║      ████╗ ████║██╔══██╗██╔══██╗██╔════╝ ╚══██╔══╝██║  ██║██║██╔════╝\n" +
                 "       ██║   ██████╔╝ ╚███╔╝ ███████╗███████║█████╗██╔████╔██║███████║██║  ██║█████╗█████╗██║   ███████║██║███████╗\n" +
                 "       ██║   ██╔══██╗ ██╔██╗ ╚════██║██╔══██║╚════╝██║╚██╔╝██║██╔══██║██║  ██║██╔══╝╚════╝██║   ██╔══██║██║╚════██║\n" +
                 "       ██║   ██║  ██║██╔╝ ██╗███████║██║  ██║      ██║ ╚═╝ ██║██║  ██║██████╔╝███████╗    ██║   ██║  ██║██║███████║\n" +
                 "       ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝      ╚═╝     ╚═╝╚═╝  ╚═╝╚═════╝ ╚══════╝    ╚═╝   ╚═╝  ╚═╝╚═╝╚══════╝\n");
 
         Bukkit.getLogger().info("enabling plugin (prod trxsh 2.0#1988)");
+        Bukkit.getLogger().warning("REMINDER: CITIZENS AND SENTINEL ARE REQUIRED FOR THIS PLUGIN TO RUN!\n" +
+                "IF NOT, PLUGIN WILL BREAK OR NOT WORK!");
 
         Bukkit.getPluginManager().registerEvents(new DeathEvent(), this);
         Bukkit.getPluginManager().registerEvents(new InteractEvent(), this);
         Bukkit.getPluginManager().registerEvents(new JoinEvent(), this);
         Bukkit.getPluginManager().registerEvents(new DamageEvent(), this);
         Bukkit.getPluginManager().registerEvents(new LeaveEvent(), this);
+        Bukkit.getPluginManager().registerEvents(new InventoryEvent(), this);
 
         Bukkit.getPluginCommand("tester").setExecutor(new TestCommand());
         Bukkit.getPluginCommand("orblevel").setExecutor(new OrbLevelCommand());
@@ -109,6 +114,9 @@ public final class Main extends JavaPlugin {
         for(Player p : Bukkit.getOnlinePlayers()) {
 
             DataPlayer dp = null;
+
+            if(FakePlayerUtility.isFake(p))
+                return;
 
             if(!PlayerData.contains(p.getUniqueId())) {
 
@@ -147,6 +155,15 @@ public final class Main extends JavaPlugin {
 
         Bukkit.getLogger().info("-------------------------------------------------------------------------------------------------------------------------\n\n" +
                 "disabling plugin (prod trxsh 2.0#1988)");
+
+        for(NPC npc : FakePlayerUtility.fakePlayers) {
+
+            npc.despawn();
+            npc.destroy();
+
+        }
+
+        FakePlayerUtility.fakePlayers.clear();
 
         ba = new BanFileManager(new File("ban.sav"));
         or = new OrbFileManager(new File("orb.sav"));
