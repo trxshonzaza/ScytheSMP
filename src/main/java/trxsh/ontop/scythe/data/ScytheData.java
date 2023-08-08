@@ -27,42 +27,80 @@ public class ScytheData {
                         "inferno",
                         "Throws a fireball at your enemies!",
                         ScytheType.INFERNO,
-                infernoEnchantment));
+                infernoEnchantment
+        ));
 
         scythes.add(new MirageScythe(
                 "Mirage Scythe",
                 "mirage",
                 "Confuse your enemies with 3 clones of yourself!",
                 ScytheType.MIRAGE,
-                null));
+                null
+        ));
 
         scythes.add(new StormScythe(
                 ChatColor.DARK_BLUE + "" + ChatColor.BOLD + "Storm Scythe",
                 "storm",
                 "Summon lightning at your enemies!",
                 ScytheType.STORM,
-                null));
+                null
+        ));
 
         scythes.add(new StrengthScythe(
                 ChatColor.DARK_RED + "" + ChatColor.BOLD + "Strength Scythe",
                 "strength",
                 "Deal double damage!",
                 ScytheType.STRENGTH,
-                null));
+                null
+        ));
 
         scythes.add(new FrostbiteScythe(
                 "Frostbite Scythe",
                 "frostbite",
                 "Create an ice prison and freeze enemies!",
                 ScytheType.FROSTBITE,
-                null));
+                null
+        ));
 
         scythes.add(new SpectralScythe(
                 ChatColor.GRAY + "" + ChatColor.BOLD + "Spectral Scythe",
                 "spectral",
                 "Become invisible and make enemies glow!",
                 ScytheType.SPECTRAL,
-                null));
+                null
+        ));
+
+        scythes.add(new VampireScythe(
+                ChatColor.RED + "" + ChatColor.BOLD + "Vampire Scythe",
+                "vampire",
+                "Steal enemies health!",
+                ScytheType.VAMPIRE,
+                null
+        ));
+
+        scythes.add(new EclipseScythe(
+                "Eclipse Scythe",
+                "eclipse",
+                "Gain positive effects during day time and night time!",
+                ScytheType.ECLIPSE,
+                null
+        ));
+
+        scythes.add(new NatureScythe(
+                ChatColor.GREEN + "" + ChatColor.BOLD + "Nature Scythe",
+                "nature",
+                "Summon twisting vines and poison your enemies!",
+                ScytheType.NATURE,
+                null
+        ));
+
+        scythes.add(new EnderScythe(
+                ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Ender Scythe",
+                "ender",
+                "Teleport anywhere you look or teleport to an enemy you hit!",
+                ScytheType.ENDER,
+                null
+        ));
 
     }
 

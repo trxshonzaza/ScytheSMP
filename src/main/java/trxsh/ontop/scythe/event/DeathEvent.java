@@ -53,7 +53,7 @@ public class DeathEvent implements Listener {
 
                 }*/
 
-        if(killedLevel < -5) {
+        if(killedLevel <= -5) {
 
             Bukkit.broadcastMessage(ChatColor.DARK_RED + "" + ChatColor.BOLD + killed.getName() + " was death-banned.");
 
@@ -69,7 +69,7 @@ public class DeathEvent implements Listener {
 
         }
 
-        if(killerLevel > 5) {
+        if(killerLevel >= 5) {
 
             killer.sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + "Your orb level exceeds the maximum amount! you have earned a Scythe Token.");
             killer.getWorld().dropItem(killer.getLocation(), ItemUtility.getScytheTokenStack());

@@ -1,8 +1,10 @@
 package trxsh.ontop.scythe.utility;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+import trxsh.ontop.scythe.Main;
 import trxsh.ontop.scythe.data.player.DataPlayer;
 import trxsh.ontop.scythe.scythebase.Scythe;
 
@@ -51,6 +53,20 @@ public class PlayerUtility {
         }
 
         return false;
+
+    }
+
+    public static void hidePlayerForEveryone(Player player) {
+
+        for(Player p : Bukkit.getOnlinePlayers())
+            p.hidePlayer(Main.Instance, player);
+
+    }
+
+    public static void showPlayerForEveryone(Player player) {
+
+        for(Player p : Bukkit.getOnlinePlayers())
+            p.showPlayer(Main.Instance, player);
 
     }
 

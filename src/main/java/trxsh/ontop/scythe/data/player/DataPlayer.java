@@ -14,6 +14,8 @@ public class DataPlayer {
 
     public UUID playerId;
 
+    public UUID lastHitId;
+
     public Player player;
 
     public int hits = 0;
@@ -65,6 +67,12 @@ public class DataPlayer {
     public UUID getPlayerId() {
 
         return playerId;
+
+    }
+
+    public UUID getLastHit() {
+
+        return lastHitId;
 
     }
 

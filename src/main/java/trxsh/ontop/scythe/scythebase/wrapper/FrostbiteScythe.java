@@ -7,6 +7,7 @@ import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import trxsh.ontop.scythe.Main;
+import trxsh.ontop.scythe.data.CooldownData;
 import trxsh.ontop.scythe.scythebase.Scythe;
 import trxsh.ontop.scythe.scythebase.ScytheType;
 
@@ -23,11 +24,13 @@ public class FrostbiteScythe extends Scythe {
     @Override
     public void doAbility(Player player) {
 
+        CooldownData.add(player.getUniqueId(), 30000);
+
         Location l = player.getLocation();
 
-        List<Block> oldBlocks = new ArrayList<>();
+        HashMap<Location, Material> oldBlocks = new HashMap<>();
 
-        int radius = 5;
+        int radius = 3;
         Material material = Material.BLUE_ICE;
 
         for (int x = -radius; x <= radius; x++) {
@@ -40,7 +43,7 @@ public class FrostbiteScythe extends Scythe {
 
                         Location blockLocation = l.clone().add(x, y, z);
 
-                        oldBlocks.add(player.getWorld().getBlockAt(blockLocation));
+                        oldBlocks.put(blockLocation, player.getWorld().getBlockAt(blockLocation).getType());
                         player.getWorld().getBlockAt(blockLocation).setType(material);
 
                     }
@@ -56,9 +59,11 @@ public class FrostbiteScythe extends Scythe {
             @Override
             public void run() {
 
-                for(Block b : oldBlocks) {
+                for(Location l : oldBlocks.keySet()) {
 
-                    player.getWorld().getBlockAt(b.getLocation()).setType(b.getType());
+                    Material m = oldBlocks.get(l);
+
+                    player.getWorld().getBlockAt(l).setType(m);
 
                 }
 

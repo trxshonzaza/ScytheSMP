@@ -31,6 +31,7 @@ public class InventoryEvent implements Listener {
             ItemStack item = e.getCurrentItem();
 
             e.setCancelled(true);
+            player.updateInventory();
 
             if(OrbUtility.getOrbLevel(player.getUniqueId()) != 5) {
 
@@ -48,6 +49,8 @@ public class InventoryEvent implements Listener {
 
             assert item != null;
             if(item.isSimilar(ItemUtility.getBanMenuStack())) {
+
+                item.setAmount(0);
 
                 player.openInventory(new BanInventory("Ban Menu").getInventory());
                 return;
@@ -71,14 +74,15 @@ public class InventoryEvent implements Listener {
                     OrbUtility.setOrbLevel(player.getUniqueId(), 0);
 
                     for(ItemStack invItem : player.getInventory())
-                        if(invItem.isSimilar(ItemUtility.getScytheTokenStack())) {
+                         if(invItem != null)
+                             if(invItem.isSimilar(ItemUtility.getScytheTokenStack())) {
 
-                            if(invItem.getAmount() > 1)
-                                invItem.setAmount(invItem.getAmount() - 1);
-                            else if(invItem.getAmount() == 1)
-                                invItem.setType(Material.AIR);
+                                 if(invItem.getAmount() > 1)
+                                     invItem.setAmount(invItem.getAmount() - 1);
+                                 else if(invItem.getAmount() == 1)
+                                     invItem.setAmount(0);
 
-                        }
+                             }
 
                 }
 
@@ -90,6 +94,7 @@ public class InventoryEvent implements Listener {
             ItemStack item = e.getCurrentItem();
 
             e.setCancelled(true);
+            player.updateInventory();
 
             if(OrbUtility.getOrbLevel(player.getUniqueId()) != 5) {
 
@@ -123,6 +128,7 @@ public class InventoryEvent implements Listener {
                                     return;
 
                                 Bukkit.getBanList(BanList.Type.NAME).pardon(entry.getTarget());
+                                BanData.remove(banned.getUniqueId());
 
                                 player.closeInventory();
                                 player.sendMessage(ChatColor.GREEN + "Player unbanned!");
@@ -133,11 +139,16 @@ public class InventoryEvent implements Listener {
                                         if(invItem.getAmount() > 1)
                                             invItem.setAmount(invItem.getAmount() - 1);
                                         else if(invItem.getAmount() == 1)
-                                            invItem.setType(Material.AIR);
+                                            invItem.setAmount(0);
 
                                     }
 
                                 OrbUtility.setOrbLevel(player.getUniqueId(), 0);
+
+                            } else {
+
+                                player.closeInventory();
+                                player.sendMessage(ChatColor.RED + "An error occured. Please try again.");
 
                             }
 

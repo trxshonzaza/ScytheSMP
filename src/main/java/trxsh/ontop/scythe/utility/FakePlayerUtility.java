@@ -42,6 +42,8 @@ public class FakePlayerUtility {
         sentinel.allowKnockback = true;
         sentinel.fightback = true;
         sentinel.damage = 4;
+        sentinel.autoswitch = true;
+        sentinel.invincible = false;
 
         SkinTrait skin = npc.getOrAddTrait(SkinTrait.class);
 
@@ -56,15 +58,14 @@ public class FakePlayerUtility {
         npcInv.set(Equipment.EquipmentSlot.HAND, player.getInventory().getItemInMainHand());
         npcInv.set(Equipment.EquipmentSlot.OFF_HAND, player.getInventory().getItemInOffHand());
 
-        FollowTrait follow = npc.getOrAddTrait(FollowTrait.class);
-
         npc.spawn(location);
+
+        FollowTrait follow = npc.getOrAddTrait(FollowTrait.class);
 
         follow.follow(player);
 
         sentinel.addIgnore("uuid:" + id);
         sentinel.addTarget("players");
-        sentinel.addTarget("npcs");
         sentinel.addTarget("monsters");
 
         fakePlayers.add(npc);

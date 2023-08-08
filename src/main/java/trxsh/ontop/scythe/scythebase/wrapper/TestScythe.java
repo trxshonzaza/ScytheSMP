@@ -9,6 +9,10 @@ import trxsh.ontop.scythe.utility.ScytheUtility;
 
 import java.util.HashMap;
 
+/**
+ * @deprecated Test scythe. Not Needed.
+ */
+@Deprecated
 public class TestScythe extends Scythe {
 
     public TestScythe(String name, String key, String description, ScytheType type, HashMap<Enchantment, Integer> enchantments) {

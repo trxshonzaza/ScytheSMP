@@ -48,8 +48,12 @@ public class AbilityLoop {
 
                                     Scythe scythe = ScytheUtility.getScytheByStack(mainHand);
 
-                                    if (scythe != null)
+                                    if (scythe != null) {
+
                                         scythe.doPassive(player);
+                                        ScytheUtility.spawnCustomParticles(player);
+
+                                    }
 
                                 }
 
@@ -62,8 +66,12 @@ public class AbilityLoop {
 
                                     Scythe scythe = ScytheUtility.getScytheByStack(offHand);
 
-                                    if (scythe != null)
+                                    if (scythe != null) {
+
                                         scythe.doPassive(player);
+                                        ScytheUtility.spawnCustomParticles(player);
+
+                                    }
 
                                 }
 

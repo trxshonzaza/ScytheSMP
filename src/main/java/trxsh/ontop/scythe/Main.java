@@ -7,6 +7,7 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import trxsh.ontop.scythe.command.OrbLevelCommand;
+import trxsh.ontop.scythe.command.ResourceRequest;
 import trxsh.ontop.scythe.command.TestCommand;
 import trxsh.ontop.scythe.data.OrbData;
 import trxsh.ontop.scythe.data.PlayerData;
@@ -17,6 +18,7 @@ import trxsh.ontop.scythe.file.wrapper.BanFileManager;
 import trxsh.ontop.scythe.file.wrapper.OrbFileManager;
 import trxsh.ontop.scythe.file.wrapper.PlayerFileManager;
 import trxsh.ontop.scythe.loop.AbilityLoop;
+import trxsh.ontop.scythe.loop.BlockLoop;
 import trxsh.ontop.scythe.loop.CooldownLoop;
 import trxsh.ontop.scythe.utility.FakePlayerUtility;
 import trxsh.ontop.scythe.utility.OrbUtility;
@@ -61,15 +63,15 @@ public final class Main extends JavaPlugin {
                 "    my github\n" +
                 "    https://github.com/trxshonzaza\n" +
                 "\n" +
-                "   ████████╗██████╗ ██╗  ██╗███████╗██╗  ██╗      ███╗   ███╗ █████╗ ██████╗ ███████╗ ████████╗██╗  ██╗██╗███████╗\n" +
-                "   ╚══██╔══╝██╔══██╗╚██╗██╔╝██╔════╝██║  ██║      ████╗ ████║██╔══██╗██╔══██╗██╔════╝ ╚══██╔══╝██║  ██║██║██╔════╝\n" +
+                "    ████████╗██████╗ ██╗  ██╗███████╗██╗  ██╗      ███╗   ███╗ █████╗ ██████╗ ███████╗ ████████╗██╗  ██╗██╗███████╗\n" +
+                "   ╚══ ██╔══╝██╔══██╗╚██╗██╔╝██╔════╝██║  ██║      ████╗ ████║██╔══██╗██╔══██╗██╔════╝ ╚══██╔══╝██║  ██║██║██╔════╝\n" +
                 "       ██║   ██████╔╝ ╚███╔╝ ███████╗███████║█████╗██╔████╔██║███████║██║  ██║█████╗█████╗██║   ███████║██║███████╗\n" +
                 "       ██║   ██╔══██╗ ██╔██╗ ╚════██║██╔══██║╚════╝██║╚██╔╝██║██╔══██║██║  ██║██╔══╝╚════╝██║   ██╔══██║██║╚════██║\n" +
                 "       ██║   ██║  ██║██╔╝ ██╗███████║██║  ██║      ██║ ╚═╝ ██║██║  ██║██████╔╝███████╗    ██║   ██║  ██║██║███████║\n" +
                 "       ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝      ╚═╝     ╚═╝╚═╝  ╚═╝╚═════╝ ╚══════╝    ╚═╝   ╚═╝  ╚═╝╚═╝╚══════╝\n");
 
         Bukkit.getLogger().info("enabling plugin (prod trxsh 2.0#1988)");
-        Bukkit.getLogger().warning("REMINDER: CITIZENS AND SENTINEL ARE REQUIRED FOR THIS PLUGIN TO RUN!\n" +
+        Bukkit.getLogger().warning("REMINDER: CITIZENS 2.0, SENTINEL AND PROTOCOL LIBRARY (ProtocolLib) ARE REQUIRED FOR THIS PLUGIN TO RUN!\n" +
                 "IF NOT, PLUGIN WILL BREAK OR NOT WORK!");
 
         Bukkit.getPluginManager().registerEvents(new DeathEvent(), this);
@@ -81,10 +83,14 @@ public final class Main extends JavaPlugin {
 
         Bukkit.getPluginCommand("tester").setExecutor(new TestCommand());
         Bukkit.getPluginCommand("orblevel").setExecutor(new OrbLevelCommand());
+        Bukkit.getPluginCommand("loadresources").setExecutor(new ResourceRequest());
 
-        ba = new BanFileManager(new File("ban.sav"));
-        or = new OrbFileManager(new File("orb.sav"));
-        pl = new PlayerFileManager(new File("player.sav"));
+        if(!getDataFolder().exists())
+            getDataFolder().mkdir();
+
+        ba = new BanFileManager(new File(getDataFolder(), "ban.sav"));
+        or = new OrbFileManager(new File(getDataFolder(), "orb.sav"));
+        pl = new PlayerFileManager(new File(getDataFolder(), "player.sav"));
 
         try {
 
@@ -144,6 +150,7 @@ public final class Main extends JavaPlugin {
 
         AbilityLoop.start();
         CooldownLoop.start();
+        BlockLoop.start();
 
         Bukkit.getLogger().info("loops started. (prod trxsh 2.0#1988)\n" +
                 "\n\n-------------------------------------------------------------------------------------------------------------------------");
@@ -156,6 +163,10 @@ public final class Main extends JavaPlugin {
         Bukkit.getLogger().info("-------------------------------------------------------------------------------------------------------------------------\n\n" +
                 "disabling plugin (prod trxsh 2.0#1988)");
 
+        AbilityLoop.running = false;
+        CooldownLoop.running = false;
+        BlockLoop.running = false;
+
         for(NPC npc : FakePlayerUtility.fakePlayers) {
 
             npc.despawn();
@@ -165,9 +176,9 @@ public final class Main extends JavaPlugin {
 
         FakePlayerUtility.fakePlayers.clear();
 
-        ba = new BanFileManager(new File("ban.sav"));
-        or = new OrbFileManager(new File("orb.sav"));
-        pl = new PlayerFileManager(new File("player.sav"));
+        ba = new BanFileManager(new File(getDataFolder(), "ban.sav"));
+        or = new OrbFileManager(new File(getDataFolder(), "orb.sav"));
+        pl = new PlayerFileManager(new File(getDataFolder(), "player.sav"));
 
         try {
 

@@ -53,13 +53,17 @@ public class DamageEvent implements Listener {
 
         DataPlayer player = PlayerData.playerList.get(e.getDamager().getUniqueId());
 
-        if(player.can2X)
-            e.setDamage(e.getFinalDamage() * 2);
-
         if(player == null)
             return;
 
-        Bukkit.broadcastMessage("added hit: " + player.getName());
+        if(player.can2X) {
+
+            e.setDamage(e.getFinalDamage() * 2);
+            player.can2X = false;
+
+        }
+
+        player.lastHitId = e.getEntity().getUniqueId();
 
         player.addHit();
 
@@ -69,7 +73,7 @@ public class DamageEvent implements Listener {
 
         if(scythe != null)
             if(scythe.getType() == ScytheType.FROSTBITE && player.getHits() >= 5)
-                e.getEntity().setFreezeTicks(80);
+                e.getEntity().setFreezeTicks(200);
         else if(scythe.getType() == ScytheType.SPECTRAL && player.getHits() >= 5)
                 ((Player) e.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 20 * 5, 1));
 

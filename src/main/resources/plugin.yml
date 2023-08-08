@@ -11,3 +11,6 @@ commands:
   orblevel:
     description: shows a player their orb level.
     usage: /<command>
+  loadresources:
+    description: loads resource pack.
+    usage: /<command>

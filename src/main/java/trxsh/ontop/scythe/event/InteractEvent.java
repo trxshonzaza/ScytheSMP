@@ -11,6 +11,7 @@ import trxsh.ontop.scythe.data.CooldownData;
 import trxsh.ontop.scythe.inventory.ScytheInventory;
 import trxsh.ontop.scythe.loop.CooldownLoop;
 import trxsh.ontop.scythe.scythebase.Scythe;
+import trxsh.ontop.scythe.scythebase.wrapper.EnderScythe;
 import trxsh.ontop.scythe.utility.ItemUtility;
 import trxsh.ontop.scythe.utility.ScytheUtility;
 
@@ -45,6 +46,24 @@ public class InteractEvent implements Listener {
                 if(scythe != null && !CooldownData.hasCooldown(player.getUniqueId()) && player.isSneaking()) {
 
                     scythe.doAbility(player);
+
+                }
+
+            }
+
+        } else if(e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) {
+
+            ItemStack item = e.getItem();
+            Player player = e.getPlayer();
+
+            if(Objects.requireNonNull(item.getItemMeta()).hasDisplayName()) {
+
+                Scythe scythe = ScytheUtility.getScytheByStack(item);
+
+                if(scythe != null && !CooldownData.hasCooldown(player.getUniqueId()) && player.isSneaking()) {
+
+                    if(scythe instanceof EnderScythe)
+                        ((EnderScythe) scythe).doOtherAbility(player);
 
                 }
 
