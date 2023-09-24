@@ -25,7 +25,7 @@ public class StrengthScythe extends Scythe {
 
         if(PlayerData.contains(player.getUniqueId())) {
 
-            CooldownData.add(player.getUniqueId(), 20000);
+            CooldownData.add(player.getUniqueId(), 20000, getType());
 
             DataPlayer p = PlayerData.playerList.get(player.getUniqueId());
 
