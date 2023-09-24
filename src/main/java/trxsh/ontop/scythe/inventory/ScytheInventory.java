@@ -3,7 +3,6 @@ package trxsh.ontop.scythe.inventory;
 import org.bukkit.inventory.Inventory;
 import trxsh.ontop.scythe.data.ScytheData;
 import trxsh.ontop.scythe.scythebase.Scythe;
-import trxsh.ontop.scythe.utility.ItemUtility;
 
 public class ScytheInventory extends CustomInventory {
 
@@ -14,15 +13,13 @@ public class ScytheInventory extends CustomInventory {
     @Override
     public Inventory getInventory() {
 
-        setInventory(createInventory(18));
+        setInventory(createInventory(9));
 
         for(Scythe scythe : ScytheData.getScythes()) {
 
             addItem(scythe.getItem());
 
         }
-
-        addItem(ItemUtility.getBanMenuStack());
 
         return loadInventory();
 

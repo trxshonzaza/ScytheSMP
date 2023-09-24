@@ -1,8 +1,6 @@
 package trxsh.ontop.scythe.scythebase.wrapper;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import trxsh.ontop.scythe.Main;
@@ -22,12 +20,14 @@ public class SpectralScythe extends Scythe {
     @Override
     public void doAbility(Player player) {
 
-        CooldownData.add(player.getUniqueId(), 30000);
+        CooldownData.add(player.getUniqueId(), 30000, getType());
 
         PlayerUtility.hidePlayerForEveryone(player);
 
         player.sendMessage(ChatColor.GRAY + "You are now hidden for 5 seconds.");
         player.getWorld().playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, .5f);
+
+        player.getWorld().spawnParticle(Particle.EXPLOSION_NORMAL, player.getLocation(), 20);
 
         Bukkit.getScheduler().runTaskLater(Main.Instance, new Runnable() {
 
@@ -37,6 +37,9 @@ public class SpectralScythe extends Scythe {
                 PlayerUtility.showPlayerForEveryone(player);
 
                 player.sendMessage(ChatColor.GRAY + "You are now visible.");
+
+                player.getWorld().spawnParticle(Particle.EXPLOSION_NORMAL, player.getLocation(), 20);
+
                 player.getWorld().playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, .5f);
 
             }

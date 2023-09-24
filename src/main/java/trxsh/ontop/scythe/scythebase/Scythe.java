@@ -57,21 +57,21 @@ public abstract class Scythe {
                 meta.addEnchant(enchantment, enchantments.get(enchantment), true);
 
         if(type == ScytheType.ECLIPSE)
-            meta.setCustomModelData(101);
+            meta.setCustomModelData(1);
         else if(type == ScytheType.ENDER)
-            meta.setCustomModelData(102);
+            meta.setCustomModelData(2);
         else if(type == ScytheType.FROSTBITE)
-            meta.setCustomModelData(103);
+            meta.setCustomModelData(3);
         else if(type == ScytheType.INFERNO)
-            meta.setCustomModelData(104);
+            meta.setCustomModelData(4);
         else if(type == ScytheType.MIRAGE)
-            meta.setCustomModelData(105);
+            meta.setCustomModelData(5);
         else if(type == ScytheType.SPECTRAL)
-            meta.setCustomModelData(106);
+            meta.setCustomModelData(6);
         else if(type == ScytheType.STRENGTH)
-            meta.setCustomModelData(107);
+            meta.setCustomModelData(7);
         else if(type == ScytheType.VAMPIRE)
-            meta.setCustomModelData(108);
+            meta.setCustomModelData(8);
 
         stack.setItemMeta(meta);
 

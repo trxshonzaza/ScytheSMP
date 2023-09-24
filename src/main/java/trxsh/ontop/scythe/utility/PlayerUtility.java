@@ -56,6 +56,52 @@ public class PlayerUtility {
 
     }
 
+    public static Scythe getScytheInHand(DataPlayer dp) {
+
+        if (dp.isOnline() && dp.getPlayer() != null && dp.getPlayerId() != null) {
+
+            Player player = dp.getPlayer();
+
+            if (player == null)
+                return null;
+
+            ItemStack mainHand = player.getInventory().getItem(EquipmentSlot.HAND);
+            ItemStack offHand = player.getInventory().getItem(EquipmentSlot.OFF_HAND);
+
+            assert mainHand != null;
+            if (mainHand.getItemMeta() != null) {
+
+                if (mainHand.getItemMeta().hasDisplayName()) {
+
+                    Scythe scythe = ScytheUtility.getScytheByStack(mainHand);
+
+                    if (scythe != null)
+                        return scythe;
+
+                }
+
+            }
+
+            assert offHand != null;
+            if (offHand.getItemMeta() != null) {
+
+                if (offHand.getItemMeta().hasDisplayName()) {
+
+                    Scythe scythe = ScytheUtility.getScytheByStack(offHand);
+
+                    if (scythe != null)
+                        return scythe;
+
+                }
+
+            }
+
+        }
+
+        return null;
+
+    }
+
     public static void hidePlayerForEveryone(Player player) {
 
         for(Player p : Bukkit.getOnlinePlayers())

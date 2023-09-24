@@ -5,6 +5,9 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.SmallFireball;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.metadata.MetadataValueAdapter;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
@@ -23,12 +26,13 @@ public class InfernoScythe extends Scythe {
     @Override
     public void doAbility(Player player) {
 
-        CooldownData.add(player.getUniqueId(), 15000);
+        CooldownData.add(player.getUniqueId(), 15000, getType());
 
-        Fireball fireball = (Fireball) player.launchProjectile(Fireball.class, player.getEyeLocation().getDirection());
+        Fireball fireball = player.launchProjectile(Fireball.class, player.getEyeLocation().getDirection());
 
         fireball.setBounce(false);
-        fireball.setYield(2F);
+        fireball.setVisualFire(true);
+        fireball.setYield(3F);
 
         player.getWorld().playSound(player.getLocation(), Sound.ENTITY_BLAZE_SHOOT, 1f, 1f);
 

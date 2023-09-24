@@ -1,9 +1,6 @@
 package trxsh.ontop.scythe.event;
 
-import org.bukkit.Bukkit;
-import org.bukkit.entity.LightningStrike;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -14,7 +11,6 @@ import trxsh.ontop.scythe.data.PlayerData;
 import trxsh.ontop.scythe.data.player.DataPlayer;
 import trxsh.ontop.scythe.scythebase.Scythe;
 import trxsh.ontop.scythe.scythebase.ScytheType;
-import trxsh.ontop.scythe.utility.FakePlayerUtility;
 import trxsh.ontop.scythe.utility.ScytheUtility;
 
 public class DamageEvent implements Listener {
@@ -22,7 +18,7 @@ public class DamageEvent implements Listener {
     @EventHandler
     public void onDamage(EntityDamageByEntityEvent e) {
 
-        if(!(e.getEntity() instanceof Player) || !(e.getDamager() instanceof Player)) {
+        if(!(e.getDamager() instanceof Player)) {
 
             if(e.getDamager() instanceof LightningStrike) {
 
@@ -33,7 +29,23 @@ public class DamageEvent implements Listener {
 
                     if(e.getEntity() instanceof LivingEntity) {
 
-                        e.setDamage(5 + e.getFinalDamage());
+                        e.setDamage(5 + e.getDamage());
+
+                    }
+
+                }
+
+            }
+
+            if(e.getDamager().getType() == EntityType.FIREBALL) {
+
+                Fireball fireball = (Fireball) e.getDamager();
+
+                if(fireball.getShooter() instanceof Player) {
+
+                    if(e.getEntity() instanceof LivingEntity) {
+
+                        ((LivingEntity) e.getEntity()).damage(10);
 
                     }
 
@@ -45,12 +57,6 @@ public class DamageEvent implements Listener {
 
         }
 
-        if(FakePlayerUtility.isFake((LivingEntity) e.getEntity()))
-            return;
-
-        if(FakePlayerUtility.isFake((LivingEntity) e.getDamager()))
-            return;
-
         DataPlayer player = PlayerData.playerList.get(e.getDamager().getUniqueId());
 
         if(player == null)
@@ -58,7 +64,7 @@ public class DamageEvent implements Listener {
 
         if(player.can2X) {
 
-            e.setDamage(e.getFinalDamage() * 2);
+            ((LivingEntity) e.getEntity()).damage(e.getDamage());
             player.can2X = false;
 
         }
@@ -73,7 +79,7 @@ public class DamageEvent implements Listener {
 
         if(scythe != null)
             if(scythe.getType() == ScytheType.FROSTBITE && player.getHits() >= 5)
-                e.getEntity().setFreezeTicks(200);
+                e.getEntity().setFreezeTicks(80);
         else if(scythe.getType() == ScytheType.SPECTRAL && player.getHits() >= 5)
                 ((Player) e.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 20 * 5, 1));
 

@@ -2,26 +2,18 @@ package trxsh.ontop.scythe;
 
 import net.citizensnpcs.api.npc.NPC;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import trxsh.ontop.scythe.command.OrbLevelCommand;
 import trxsh.ontop.scythe.command.ResourceRequest;
-import trxsh.ontop.scythe.command.TestCommand;
-import trxsh.ontop.scythe.data.OrbData;
+import trxsh.ontop.scythe.command.operator.OpenScythes;
 import trxsh.ontop.scythe.data.PlayerData;
 import trxsh.ontop.scythe.data.player.DataPlayer;
 import trxsh.ontop.scythe.event.*;
 import trxsh.ontop.scythe.file.FileManager;
-import trxsh.ontop.scythe.file.wrapper.BanFileManager;
-import trxsh.ontop.scythe.file.wrapper.OrbFileManager;
 import trxsh.ontop.scythe.file.wrapper.PlayerFileManager;
 import trxsh.ontop.scythe.loop.AbilityLoop;
 import trxsh.ontop.scythe.loop.BlockLoop;
 import trxsh.ontop.scythe.loop.CooldownLoop;
-import trxsh.ontop.scythe.utility.FakePlayerUtility;
-import trxsh.ontop.scythe.utility.OrbUtility;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,7 +22,7 @@ public final class Main extends JavaPlugin {
 
     /*
     -------------------------------------------------------------------------------
-    made for acetral
+    made for acetral and SMPDuels
     coded by trxsh 2.0#1988
     no recoding or redistribution of this without developer or owners approval
 
@@ -48,8 +40,6 @@ public final class Main extends JavaPlugin {
 
     public static Main Instance = null;
 
-    public FileManager ba;
-    public FileManager or;
     public FileManager pl;
 
     @Override
@@ -71,35 +61,28 @@ public final class Main extends JavaPlugin {
                 "       ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝      ╚═╝     ╚═╝╚═╝  ╚═╝╚═════╝ ╚══════╝    ╚═╝   ╚═╝  ╚═╝╚═╝╚══════╝\n");
 
         Bukkit.getLogger().info("enabling plugin (prod trxsh 2.0#1988)");
-        Bukkit.getLogger().warning("REMINDER: CITIZENS 2.0, SENTINEL AND PROTOCOL LIBRARY (ProtocolLib) ARE REQUIRED FOR THIS PLUGIN TO RUN!\n" +
-                "IF NOT, PLUGIN WILL BREAK OR NOT WORK!");
 
-        Bukkit.getPluginManager().registerEvents(new DeathEvent(), this);
         Bukkit.getPluginManager().registerEvents(new InteractEvent(), this);
         Bukkit.getPluginManager().registerEvents(new JoinEvent(), this);
         Bukkit.getPluginManager().registerEvents(new DamageEvent(), this);
         Bukkit.getPluginManager().registerEvents(new LeaveEvent(), this);
-        Bukkit.getPluginManager().registerEvents(new InventoryEvent(), this);
+        Bukkit.getPluginManager().registerEvents(new ResourceStatusEvent(), this);
 
-        Bukkit.getPluginCommand("tester").setExecutor(new TestCommand());
-        Bukkit.getPluginCommand("orblevel").setExecutor(new OrbLevelCommand());
         Bukkit.getPluginCommand("loadresources").setExecutor(new ResourceRequest());
+
+        // Operator commands
+
+        Bukkit.getPluginCommand("scythes").setExecutor(new OpenScythes());
 
         if(!getDataFolder().exists())
             getDataFolder().mkdir();
 
-        ba = new BanFileManager(new File(getDataFolder(), "ban.sav"));
-        or = new OrbFileManager(new File(getDataFolder(), "orb.sav"));
         pl = new PlayerFileManager(new File(getDataFolder(), "player.sav"));
 
         try {
 
             Bukkit.getLogger().info("loading data");
 
-            if(ba.exists())
-                ba.load();
-            if(or.exists())
-                or.load();
             if(pl.exists())
                 pl.load();
 
@@ -121,14 +104,10 @@ public final class Main extends JavaPlugin {
 
             DataPlayer dp = null;
 
-            if(FakePlayerUtility.isFake(p))
-                return;
-
             if(!PlayerData.contains(p.getUniqueId())) {
 
                 dp = new DataPlayer(p.getUniqueId());
                 PlayerData.add(p.getUniqueId(), dp);
-                OrbData.add(p.getUniqueId());
 
             } else {
 
@@ -137,10 +116,6 @@ public final class Main extends JavaPlugin {
             }
 
             dp.setData(p);
-
-            p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
-            p.sendMessage(ChatColor.AQUA + "Plugin successfully reloaded. welcome back :)");
-            p.sendMessage(ChatColor.GRAY + "Your orb level is: " + ChatColor.LIGHT_PURPLE + OrbUtility.getOrbLevel(p.getUniqueId()));
 
         }
 
@@ -167,25 +142,12 @@ public final class Main extends JavaPlugin {
         CooldownLoop.running = false;
         BlockLoop.running = false;
 
-        for(NPC npc : FakePlayerUtility.fakePlayers) {
-
-            npc.despawn();
-            npc.destroy();
-
-        }
-
-        FakePlayerUtility.fakePlayers.clear();
-
-        ba = new BanFileManager(new File(getDataFolder(), "ban.sav"));
-        or = new OrbFileManager(new File(getDataFolder(), "orb.sav"));
         pl = new PlayerFileManager(new File(getDataFolder(), "player.sav"));
 
         try {
 
             Bukkit.getLogger().info("saving data");
 
-            ba.save();
-            or.save();
             pl.save();
 
             Bukkit.getLogger().info("saved data");

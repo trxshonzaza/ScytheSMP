@@ -1,16 +1,13 @@
-name: Scythe
+name: Scythe-X-SmpDuels
 version: '${project.version}'
 main: trxsh.ontop.scythe.Main
 api-version: 1.20
 authors: [ trxsh ]
 description: scythe smp plugin (requires citizens and sentinel)
 commands:
-  tester:
-    description: tester command
-    usage: /<command>
-  orblevel:
-    description: shows a player their orb level.
-    usage: /<command>
   loadresources:
     description: loads resource pack.
+    usage: /<command>
+  scythes:
+    description: gives a operator a list of scythes.
     usage: /<command>

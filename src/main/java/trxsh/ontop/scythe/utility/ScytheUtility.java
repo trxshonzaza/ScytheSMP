@@ -13,26 +13,6 @@ import trxsh.ontop.scythe.scythebase.ScytheType;
 
 public class ScytheUtility {
 
-    public static Scythe getScythe(ScytheType type) {
-
-        for(Scythe scythe : ScytheData.getScythes())
-            if(scythe.getType() == type)
-                return scythe;
-
-        return null;
-
-    }
-
-    public static Scythe getScytheByName(String name) {
-
-        for(Scythe scythe : ScytheData.getScythes())
-            if(scythe.getName().equalsIgnoreCase(name))
-                return scythe;
-
-        return null;
-
-    }
-
     public static Scythe getScytheByStack(ItemStack item) {
 
         for(Scythe scythe : ScytheData.getScythes())
@@ -72,12 +52,14 @@ public class ScytheUtility {
 
         if(dp.can2X) {
 
+            circlePoints = 20;
+
             for (int i = 0; i < circlePoints; i++) {
 
                 double angle = (2 * Math.PI * i) / circlePoints;
 
-                double xOffset = Math.cos(angle) * 1.2;
-                double zOffset = Math.sin(angle) * 1.2;
+                double xOffset = Math.cos(angle) * .5;
+                double zOffset = Math.sin(angle) * .5;
 
                 p.getWorld().spawnParticle(particleType, playerLocation.getX() + xOffset,
                         playerLocation.getY() + 2D, playerLocation.getZ() + zOffset, 0, 0, 0, 0, 0);
